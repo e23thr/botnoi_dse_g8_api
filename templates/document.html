@@ -24,6 +24,9 @@
       .has-spacing {
         letter-spacing: 0.5rem;
       }
+      .align-item-top {
+        align-items: flex-start !important;
+      }
     </style>
   </head>
   <body class="has-navbar-fixed-top">
@@ -40,11 +43,17 @@
     </nav>
 
     <section class="hero is-link is-fullheight-with-navbar is-primary">
-      <div class="hero-body">
-        <div class="container has-text-centered">
-          <p class="title has-spacing">BOTNOI DSE</p>
-          <p class="subtitle has-spacing">Group 8</p>
-        </div>
+      <div class="hero-body align-item-top">
+        <section class="section">
+          <div class="container">
+            <h1 class="title">
+              การ deploy เข้า heroku แบบอัตโนมัติจากการ push commit เข้า git
+            </h1>
+            <h2 class="subtitle">
+              เพื่อความสะดวกและป้องกันการลืมขั้นตอนต่างๆ ที่ไม่จำเป็น
+            </h2>
+          </div>
+        </section>
       </div>
     </section>
   </body>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOTNOI DSE Group 8 - Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <style type="text/css">
+      html,
+      body {
+        font-family: "Kanit", "sans-serif";
+      }
+      .has-spacing {
+        letter-spacing: 0.5rem;
+      }
+      .align-item-top {
+        align-items: flex-start !important;
+      }
+      .team-min-height {
+        min-height: 10rem;
+      }
+    </style>
+  </head>
+  <body class="has-navbar-fixed-top">
+    <nav class="navbar is-fixed-top">
+      <div class="container">
+        <div class="navbar-menu">
+          <div class="navbar-start">
+            <a href="/" class="navbar-item">Home</a>
+            <a href="team.html" class="navbar-item">Team</a>
+            <a href="document.html" class="navbar-item">Document</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero is-link is-fullheight-with-navbar is-primary">
+      <div class="hero-body align-item-top">
+        <div class="columns">
+          {% for teammate in team: %}
+          <div class="column is-one-thirds is-half-mobile">
+            <div class="card">
+              <div class="card-content team-min-height">
+                <p class="subtitle has-text-dark">{{ teammate[0] }}</p>
+              </div>
+              <footer class="card-footer">
+                {% if teammate[2] != "" %}
+                <p class="card-footer-item">
+                  <span>
+                    <a href="https://line.me/ti/p/~{{ teammate[2] }}">
+                      <i class="fab fa-line has-text-success"></i>
+                      Line me
+                    </a>
+                  </span>
+                </p>
+                {% endif %} {% if teammate[1] != "" %}
+                <p class="card-footer-item">
+                  <span>
+                    <a href="mailto:{{ teammate[1] }}">
+                      <i class="fas fa-envelope-square has-text-info"></i>
+                      Email me
+                    </a>
+                  </span>
+                </p>
+                {% endif %}
+              </footer>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

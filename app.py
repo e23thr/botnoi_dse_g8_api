@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
-import json
+import dseg8.team as team
 import time
-from flask import Flask, redirect, send_from_directory
+import os
+from flask import Flask, abort, redirect, send_from_directory, Blueprint, Response, render_template  # , jsonify
 from flask_restful import Resource, Api, reqparse
 
 app = Flask(__name__)
@@ -19,9 +20,21 @@ def home_page():
     return redirect("/web/index.html", code=302)
 
 
+# @app.route("/test")
+# def test_route():
+#     return jsonify(team.get_team_df().values.tolist())
+
+
 @app.route('/web/<path:filename>')  # ใช้ static html จาก folder static
 def static_files(filename):
-    return send_from_directory("./static", filename)
+    file_name = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),  "templates", filename)
+
+    if os.path.exists(file_name):
+        return render_template(filename, team=team.get_team_df().values.tolist())
+    else:
+        # Return not found http status code 404 and use browser default 404 page
+        return abort(404)
 
 
 # Start flask
