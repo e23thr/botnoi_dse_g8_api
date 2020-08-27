@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOTNOI DSE Group 8 - Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <style type="text/css">
+      html,
+      body {
+        font-family: "Kanit", "sans-serif";
+      }
+      .has-spacing {
+        letter-spacing: 0.5rem;
+      }
+      .align-item-top {
+        align-items: flex-start !important;
+      }
+      .flex-wrap {
+        flex-wrap: wrap;
+      }
+      .team-min-height {
+        min-height: 10rem;
+      }
+      .team-footer-min-height {
+        min-height: 3rem;
+      }
+    </style>
+    <script type="application/javascript">
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(
+          document.querySelectorAll(".navbar-burger"),
+          0
+        );
+
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+          // Add a click event on each of them
+          $navbarBurgers.forEach((el) => {
+            el.addEventListener("click", () => {
+              // Get the target from the "data-target" attribute
+              const target = el.dataset.target;
+              const $target = document.getElementById(target);
+
+              // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+              el.classList.toggle("is-active");
+              $target.classList.toggle("is-active");
+            });
+          });
+        }
+      });
+    </script>
+  </head>
+  <body class="has-navbar-fixed-top">
+    <nav class="navbar is-fixed-top">
+      <div class="container">
+        <div class="navbar-brand">
+          <span class="navbar-item">DSE Group 8</span>
+          <a class="navbar-burger" data-target="navbarMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <div class="navbar-menu" id="navbarMenu">
+          <div class="navbar-start">
+            <a href="/" class="navbar-item">Home</a>
+            <a href="team.html" class="navbar-item">Team</a>
+            <a href="document.html" class="navbar-item">Document</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {% block content %} {% endblock content %}
+  </body>
+</html>
