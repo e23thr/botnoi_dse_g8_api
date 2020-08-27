@@ -27,8 +27,14 @@
       .align-item-top {
         align-items: flex-start !important;
       }
+      .flex-wrap {
+        flex-wrap: wrap;
+      }
       .team-min-height {
         min-height: 10rem;
+      }
+      .team-footer-min-height {
+        min-height: 3rem;
       }
     </style>
   </head>
@@ -47,17 +53,15 @@
 
     <section class="hero is-link is-fullheight-with-navbar is-primary">
       <div class="hero-body align-item-top">
-        <div class="content">
-          <div class="columns is-desktop">
+        <div class="container">
+          <div class="columns is-flex flex-wrap">
             {% for teammate in team: %}
-            <div
-              class="column is-half-mobile is-half-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd"
-            >
+            <div class="column is-full-mobile is-one-third-tablet">
               <div class="card">
                 <div class="card-content team-min-height">
                   <p class="subtitle has-text-dark">{{ teammate[0] }}</p>
                 </div>
-                <footer class="card-footer">
+                <footer class="card-footer team-footer-min-height">
                   {% if teammate[2] != "" %}
                   <p class="card-footer-item">
                     <span>
