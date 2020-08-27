@@ -9,13 +9,15 @@ from flask_restful import Resource, Api, reqparse
 app = Flask(__name__)
 api = Api(app)
 
+app.url_map.strict_slashes = False
+
 
 @app.route('/')  # เมื่อเข้ามาที่ root
 def index():
     return redirect("/web/index.html", code=302)
 
 
-@app.route("/web", strict_slashes=False)  # เผื่อมีใครพิมพ์ /web เข้ามาตรงๆ
+@app.route("/web")  # เผื่อมีใครพิมพ์ /web เข้ามาตรงๆ
 def home_page():
     return redirect("/web/index.html", code=302)
 
