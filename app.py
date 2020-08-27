@@ -15,7 +15,7 @@ def index():
     return redirect("/web/index.html", code=302)
 
 
-@app.route("/web")  # เผื่อมีใครพิมพ์ /web เข้ามาตรงๆ
+@app.route("/web", strict_slashes=False)  # เผื่อมีใครพิมพ์ /web เข้ามาตรงๆ
 def home_page():
     return redirect("/web/index.html", code=302)
 
