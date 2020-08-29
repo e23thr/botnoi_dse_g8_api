@@ -16,6 +16,7 @@
       defer
       src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
     ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style type="text/css">
       html,
       body {
@@ -38,6 +39,19 @@
       }
     </style>
     <script type="application/javascript">
+      window.callApi = function ({ area, bedrooms, restrooms, floors }) {
+        return axios.get("/api/get-house-price", {
+          params: {
+            area: area,
+            bedrooms: bedrooms,
+            restrooms: restrooms,
+            floors: floors,
+          },
+        });
+      };
+      //
+      // callApi(50, 2, 1, 2).then((response) => console.log(response.data));
+
       document.addEventListener("DOMContentLoaded", () => {
         // Get all "navbar-burger" elements
         const $navbarBurgers = Array.prototype.slice.call(
@@ -77,6 +91,7 @@
         <div class="navbar-menu" id="navbarMenu">
           <div class="navbar-start">
             <a href="/" class="navbar-item">Home</a>
+            <a href="try.html" class="navbar-item">Try our api !!</a>
             <a href="team.html" class="navbar-item">Team</a>
             <a href="document.html" class="navbar-item">Document</a>
           </div>
