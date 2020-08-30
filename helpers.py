@@ -10,5 +10,6 @@ def predict_house_price(area, bedrooms, restrooms, floors):
     # Load pre-train model
     model = pickle.load(open(APP_MODEL + 'house_price_model.p', "rb"))
     # Predict price
-    predict = model.predict(pd.DataFrame([[area, bedrooms, restrooms, floors]]))
+    input_df = pd.DataFrame({"area": [area], "bedrooms": [bedrooms], "restrooms": [restrooms], "floors": [floors]})
+    predict = model.predict(input_df)
     return predict[0]
