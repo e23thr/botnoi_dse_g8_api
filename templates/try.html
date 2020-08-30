@@ -1,0 +1,156 @@
+{% extends "base.html" %} {% block content %}
+<section class="hero is-link is-fullheight-with-navbar is-primary">
+  <div class="hero-body align-item-top">
+    <div class="container has-text-centered">
+      <div class="columns">
+        <div class="column is-6 is-offset-2">
+          <form onsubmit="return false">
+            <!-- Area -->
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label has-text-white">พื้นที่ใช้สอย</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="text"
+                      id="area"
+                      placeholder="กรอกพื้นที่ใช้สอย หน่วยตารางเมตร"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- floors -->
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label has-text-white">ชั้น</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="text"
+                      id="floors"
+                      placeholder="ชั้นที่อยู่ของห้อง"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ห้องนอน -->
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label has-text-white">ห้องนอน</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="text"
+                      id="bedrooms"
+                      placeholder="จำนวนห้องนอน"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ห้องน้ำ -->
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label has-text-white">ห้องน้ำ</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="text"
+                      id="restrooms"
+                      placeholder="จำนวนห้องน้ำ"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Search button -->
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <!-- Left empty for spacing -->
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <button
+                      id="predict-btn"
+                      class="button is-primary"
+                      onclick="predict()"
+                    >
+                      Predict now!
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/javascript">
+  function predict() {
+    const areaElement = document.querySelector("#area");
+    const floorElement = document.querySelector("#floors");
+    const bedroomElement = document.querySelector("#bedrooms");
+    const restroomElement = document.querySelector("#restrooms");
+
+    console.log("area");
+    const area = parseFloat(areaElement.value) || 0.0;
+    console.log("floor");
+    const floors = parseInt(floorElement.value, 10) || 0;
+    console.log("bedrooms");
+    const bedrooms = parseInt(bedroomElement.value, 10) || 0;
+    console.log("restrooms");
+    const restrooms = parseInt(restroomElement.value, 10) || 0;
+
+    // set data back to all inputs
+    areaElement.value = area;
+    floorElement.value = floors;
+    bedroomElement.value = bedrooms;
+    restroomElement.value = restrooms;
+
+    if (area <= 0) {
+      return alert("กรุณากรอกพื้นที่ใช้สอยที่ต้องการประเมินราคา");
+    }
+    if (floors <= 0) {
+      return alert("กรุณากรอกชั้นที่ต้องการประเมินราคา");
+    }
+    if (bedrooms <= 0) {
+      return alert("กรุณากรอกจำนวนห้องนอนที่ต้องการประเมินราคา");
+    }
+    if (restrooms <= 0) {
+      return alert("กรุณากรอกจำนวนห้องน้ำที่ต้องการประเมินราคา");
+    }
+    callApi({ area, bedrooms, restrooms, floors })
+      .then((response) => {
+        // alert("Response\n" + JSON.stringify(response.data.expected_price));
+        alert("Predicted Price " + response.data.expected_price);
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Error", e);
+      });
+  }
+</script>
+
+{% endblock content %}
