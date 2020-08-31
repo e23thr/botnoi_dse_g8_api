@@ -17,6 +17,7 @@
       src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
     ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <style type="text/css">
       html,
       body {
@@ -36,6 +37,9 @@
       }
       .team-footer-min-height {
         min-height: 3rem;
+      }
+      .modal-footer {
+        justify-content: flex-end;
       }
     </style>
     <script type="application/javascript">
@@ -98,6 +102,7 @@
         </div>
       </div>
     </nav>
+
     {% block content %} {% endblock content %}
   </body>
 </html>

@@ -8,7 +8,9 @@
             <!-- Area -->
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label has-text-white">พื้นที่ใช้สอย</label>
+                <label class="label has-text-white"
+                  >พื้นที่ใช้สอย (ตร.ม.)</label
+                >
               </div>
               <div class="field-body">
                 <div class="field">
@@ -17,6 +19,7 @@
                       class="input"
                       type="text"
                       id="area"
+                      value="30"
                       placeholder="กรอกพื้นที่ใช้สอย หน่วยตารางเมตร"
                     />
                   </div>
@@ -36,6 +39,7 @@
                       class="input"
                       type="text"
                       id="floors"
+                      value="10"
                       placeholder="ชั้นที่อยู่ของห้อง"
                     />
                   </div>
@@ -55,6 +59,7 @@
                       class="input"
                       type="text"
                       id="bedrooms"
+                      value="1"
                       placeholder="จำนวนห้องนอน"
                     />
                   </div>
@@ -73,6 +78,7 @@
                     <input
                       class="input"
                       type="text"
+                      value="1"
                       id="restrooms"
                       placeholder="จำนวนห้องน้ำ"
                     />
@@ -107,6 +113,41 @@
   </div>
 </section>
 
+<div class="modal" id="result-dlg">
+  <div class="modal-background" onclick="closeDialog()"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">ผลการประเมิน</p>
+      <button
+        class="delete"
+        onClick="closeDialog()"
+        aria-label="close"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <!-- Content ... -->
+      <div class="columns">
+        <div class="column has-text-centered">ราคาประเมิน</div>
+      </div>
+      <div class="columns">
+        <div
+          class="column has-text-bold has-text-centered is-size-3 has-text-weight-bold"
+          id="predict-result"
+        ></div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <div>API response</div>
+          <code id="raw-response"> </code>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot modal-footer">
+      <button class="button is-success" onClick="closeDialog()">ปิด</button>
+    </footer>
+  </div>
+</div>
+
 <script type="application/javascript">
   function predict() {
     const areaElement = document.querySelector("#area");
@@ -114,20 +155,10 @@
     const bedroomElement = document.querySelector("#bedrooms");
     const restroomElement = document.querySelector("#restrooms");
 
-    console.log("area");
     const area = parseFloat(areaElement.value) || 0.0;
-    console.log("floor");
     const floors = parseInt(floorElement.value, 10) || 0;
-    console.log("bedrooms");
     const bedrooms = parseInt(bedroomElement.value, 10) || 0;
-    console.log("restrooms");
     const restrooms = parseInt(restroomElement.value, 10) || 0;
-
-    // set data back to all inputs
-    areaElement.value = area;
-    floorElement.value = floors;
-    bedroomElement.value = bedrooms;
-    restroomElement.value = restrooms;
 
     if (area <= 0) {
       return alert("กรุณากรอกพื้นที่ใช้สอยที่ต้องการประเมินราคา");
@@ -141,15 +172,40 @@
     if (restrooms <= 0) {
       return alert("กรุณากรอกจำนวนห้องน้ำที่ต้องการประเมินราคา");
     }
+
+    // set data back to all inputs
+    areaElement.value = area;
+    floorElement.value = floors;
+    bedroomElement.value = bedrooms;
+    restroomElement.value = restrooms;
+
     callApi({ area, bedrooms, restrooms, floors })
       .then((response) => {
+        const resultDlg = document.querySelector("#result-dlg");
+        const predictResult = document.querySelector("#predict-result");
+        const rawResponse = document.querySelector("#raw-response");
         // alert("Response\n" + JSON.stringify(response.data.expected_price));
-        alert("Predicted Price " + response.data.expected_price);
+        if (resultDlg) {
+          resultDlg.classList.add("is-active");
+          predictResult.innerHTML =
+            numeral(response.data.expected_price).format("0,0.0000") + " บาท";
+          rawResponse.innerHTML = JSON.stringify(response.data, null, 2);
+        } else {
+          alert(
+            "Predicted Price " +
+              numeral(response.data.expected_price).format("0,0.0000")
+          );
+        }
       })
       .catch((e) => {
         console.log(e);
         alert("Error", e);
       });
+  }
+
+  function closeDialog() {
+    const resultDlg = document.querySelector("#result-dlg");
+    resultDlg.classList.remove("is-active");
   }
 </script>
 
