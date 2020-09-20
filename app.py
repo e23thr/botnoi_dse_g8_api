@@ -9,6 +9,7 @@ from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 
 import endpoint
+from dseg8 import bnapi
 
 app = Flask(__name__)
 api = Api(app)
@@ -49,6 +50,7 @@ def static_files(filename):
 # เพิ่ม route สำหรับ predict ราคาเป็น return as json
 api.add_resource(endpoint.HousePricePrediction, '/api/get-house-price')
 
+api.add_resource(bnapi.PredictCondoPrice, '/api/proxy')
 # Start flask
 if __name__ == '__main__':
     app.run(threaded=True)
